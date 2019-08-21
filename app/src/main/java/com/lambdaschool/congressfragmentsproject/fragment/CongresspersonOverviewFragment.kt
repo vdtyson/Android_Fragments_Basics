@@ -1,4 +1,4 @@
-package com.lambdaschool.congressfragmentsproject
+package com.lambdaschool.congressfragmentsproject.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -9,9 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-import com.lambdaschool.congressfragmentsproject.dummy.DummyContent
-import com.lambdaschool.congressfragmentsproject.dummy.DummyContent.DummyItem
+import com.lambdaschool.congressfragmentsproject.adapter.MyCongresspersonOverviewRecyclerViewAdapter
+import com.lambdaschool.congressfragmentsproject.R
+import com.lambdaschool.congressfragmentsproject.api.CongresspersonOverview
+import kotlinx.android.synthetic.main.activity_main.*
 
 /**
  * A fragment representing a list of Items.
@@ -23,7 +24,7 @@ class CongresspersonOverviewFragment : Fragment() {
     // TODO: Customize parameters
     private var columnCount = 1
 
-    private var listener: OnListFragmentInteractionListener? = null
+    private var congressPersonOverviewListener: OnListFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,33 +38,29 @@ class CongresspersonOverviewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_congresspersonoverview_list, container, false)
+        return inflater.inflate(R.layout.fragment_congresspersonoverview_list, container, false)
+    }
 
-        // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                adapter = MyCongresspersonOverviewRecyclerViewAdapter(DummyContent.ITEMS, listener)
-            }
-        }
-        return view
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnListFragmentInteractionListener) {
-            listener = context
+            congressPersonOverviewListener = context
         } else {
             throw RuntimeException(context.toString() + " must implement OnListFragmentInteractionListener")
         }
     }
 
+
+
     override fun onDetach() {
         super.onDetach()
-        listener = null
+        congressPersonOverviewListener = null
     }
 
     /**
@@ -79,7 +76,7 @@ class CongresspersonOverviewFragment : Fragment() {
      */
     interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: DummyItem?)
+        fun onListFragmentInteraction(item: CongresspersonOverview)
     }
 
     companion object {
