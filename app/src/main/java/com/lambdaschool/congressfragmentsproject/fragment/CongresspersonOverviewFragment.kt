@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.lambdaschool.congressfragmentsproject.adapter.MyCongresspersonOverviewRecyclerViewAdapter
 import com.lambdaschool.congressfragmentsproject.R
+import com.lambdaschool.congressfragmentsproject.api.CongressDao
 import com.lambdaschool.congressfragmentsproject.api.CongresspersonOverview
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -43,8 +44,10 @@ class CongresspersonOverviewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
+        (view as RecyclerView).apply {
+            adapter = MyCongresspersonOverviewRecyclerViewAdapter(CongressDao.allMembers, congressPersonOverviewListener)
+            layoutManager = LinearLayoutManager(this@CongresspersonOverviewFragment.context)
+        }
     }
 
     override fun onAttach(context: Context) {
